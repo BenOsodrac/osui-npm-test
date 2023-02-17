@@ -1,7 +1,7 @@
 {
-	"name": "outsystems-ui",
-	"version": "2.15.0",
-	"description": "OutSystems UI Framework",
+	"name": "custom-outsystems-ui",
+	"version": "1.0.0",
+	"description": "Cusotm OutSystems UI",
 	"license" : "BSD-3-Clause",
 	"scripts": {
 		"build": "gulp createProduction && npm run lint",
