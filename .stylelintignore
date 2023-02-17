@@ -1,9 +1,0 @@
-dist
-gulp
-gulpfile.js
-dependencies
-node_modules
-custom-scripts/**
-src/static/**
-
-*.css
