@@ -1,15 +1,31 @@
+// @ts-ignore
 /// <reference path="../../node_modules/outsystems-ui/dist/OutSystemsUI.d.ts" />
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace MyOSUI.test {
+namespace MyOSUI.ExtendExample {
+    const _sidebarMap = new Map<string, any>();
+
+    // Override OSUI Create method
+    OutSystems.OSUI.Patterns.SidebarAPI.Create = CustomCreate;
     // Override OSUI Initialize method
     OutSystems.OSUI.Patterns.SidebarAPI.Initialize = CustomInitialize;
 
+
+    // My custom Create Sidebar method
+    export function CustomCreate(sidebarId: string, configs: string): any {
+
+        const _newSidebar = new MySidebar(sidebarId, JSON.parse(configs));
+
+
+        _sidebarMap.set(sidebarId, _newSidebar);
+
+        return _newSidebar;
+    }
+
+
     // My custom Initialize Sidebar method
     export function CustomInitialize(sidebarId: string): any {
-        const sidebar = OutSystems.OSUI.Patterns.SidebarAPI.GetSidebarById(sidebarId);
-
-        const mySidebar = new MySidebar(sidebar);
+        const mySidebar = _sidebarMap.get(sidebarId);
 
         mySidebar.build();
 
@@ -17,12 +33,12 @@ namespace MyOSUI.test {
     }
 
     // My custom Sidebar Class
-    export class MySidebar {
-        // OutSystems Sidebar instance
-        private _osuiSidebar: OSFramework.Patterns.Sidebar.ISidebar;
+    // @ts-ignore
+    export class MySidebar extends OSUIFramework.Patterns.Sidebar.Sidebar {
 
-        constructor(sidebar: OSFramework.Patterns.Sidebar.ISidebar) {
-            this._osuiSidebar = sidebar;
+        constructor(sidebarId: string, configs: string) {
+            super(sidebarId, configs);
+
         }
 
         private _mySidebarOverlayClose(e: Event): void {
@@ -32,9 +48,9 @@ namespace MyOSUI.test {
         public build() {
             // Override Sidebar Overlay event
             //@ts-ignore
-            this._osuiSidebar._overlayClickCallback = this._mySidebarOverlayClose;
+            this._overlayClickCallback = this._mySidebarOverlayClose;
             // build outsystems Sidebar
-            this._osuiSidebar.build();
+            super.build();
         }
     }
 }
