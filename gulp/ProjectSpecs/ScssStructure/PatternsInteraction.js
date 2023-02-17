@@ -30,6 +30,9 @@ const sectionInfo = {
             "key": "dropdown"
         },
         {
+            "key": "dropdown-serverside-item"
+        },
+        {
             "name": "Floating Actions",
             "path": "04-patterns/03-interaction/floating-actions"
         },
@@ -40,9 +43,6 @@ const sectionInfo = {
         {
             "name": "Lightbox Image",
             "path": "04-patterns/03-interaction/lightbox-image"
-        },
-        {
-            "key": "monthpicker"
         },
         {
             "key": "notification"
@@ -64,9 +64,6 @@ const sectionInfo = {
         {
             "name": "Stacked Cards",
             "path": "04-patterns/03-interaction/stacked-cards"
-        },
-        {
-            "key": "timepicker"
         },
         {
             "name": "Video",

@@ -1,5 +1,4 @@
 // Get the reference file for each pattern section
-const patternsAdvanced = require('./PatternsAdvanced');
 const patternsAdaptive = require('./PatternsAdaptive');
 const patternsContent = require('./PatternsContent');
 const patternsInteraction = require('./PatternsInteraction');
@@ -22,7 +21,6 @@ const sectionInfo = {
         patternsNavigation.info,
         patternsNumbers.info,
         patternsUtilities.info,
-        patternsAdvanced.info,
         patternsDeprecated.info
     ]
 };

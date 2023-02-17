@@ -6,7 +6,6 @@ const resets = require('./Resets');
 const htmlElements = require('./HTMLElements');
 const pageLayout = require('./PageLayout');
 const widgets = require('./Widgets');
-const providers = require('./Providers');
 const patterns = require('./Patterns');
 const usefullClasses = require('./UsefullClasses');
 const screenTransitions = require('./ScreenTransitions');
@@ -25,7 +24,6 @@ const cssStructure = {
 	"html-elements": htmlElements.info,
 	"page-layout": pageLayout.info,
 	"widgets": widgets.info,
-	"providers": providers.info,
 	"patterns": patterns.info,
 	"usefull-classes": usefullClasses.info,
 	"screen-transitions": screenTransitions.info,

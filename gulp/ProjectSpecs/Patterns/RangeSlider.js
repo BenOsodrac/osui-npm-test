@@ -3,7 +3,7 @@
 **/
 const patternInfo = {
     "codeName": "RangeSlider",
-    "scss": "../scripts/OSFramework/OSUI/Pattern/RangeSlider/scss/rangeslider",
+    "scss": "../scripts/OSFramework/Pattern/RangeSlider/scss/range-slider",
     "section": "Interaction",
 
     "assets": [
@@ -11,12 +11,20 @@ const patternInfo = {
             "codeName": "SliderSingle",
             "inDevelopment": false,
             "name": "Slider Single",
+            "provider": {
+                "name": "NoUISlider",
+                "version": "v15.6.0"
+            }
         },
         
         {
             "codeName": "SliderInterval",
             "inDevelopment": false,
             "name": "Slider Interval",
+            "provider": {
+                "name": "NoUISlider",
+                "version": "v15.6.0"
+            }
         }
     ]
 };
