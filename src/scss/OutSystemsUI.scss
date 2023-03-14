@@ -1,0 +1,8 @@
+@import '../../node_modules/outsystems-ui/src/scss/00-abstract/setup-zindex-vars';
+@import '../../node_modules/outsystems-ui/src/scss/00-abstract/setup-border-vars';
+@import '../../node_modules/outsystems-ui/src/scripts/OSFramework/Pattern/Sidebar/scss/sidebar';
+
+.active-screen .osui-sidebar--is-open.osui-sidebar--has-overlay::before {
+    cursor: default;
+    pointer-events: none;
+}

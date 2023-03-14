@@ -1,35 +1,53 @@
 "use strict";
-var MyOSUI;
-(function (MyOSUI) {
-    var ExtendExample;
-    (function (ExtendExample) {
-        const _sidebarMap = new Map();
-        OutSystems.OSUI.Patterns.SidebarAPI.Create = CustomCreate;
-        OutSystems.OSUI.Patterns.SidebarAPI.Initialize = CustomInitialize;
-        function CustomCreate(sidebarId, configs) {
-            const _newSidebar = new MySidebar(sidebarId, JSON.parse(configs));
-            _sidebarMap.set(sidebarId, _newSidebar);
-            return _newSidebar;
+var OverridePattern;
+(function (OverridePattern) {
+    var Tabs;
+    (function (Tabs) {
+        OutSystems.OSUI.Patterns.TabsAPI.Initialize = CustomInitialize;
+        function CustomInitialize(tabsId) {
+            const tabs = OutSystems.OSUI.Patterns.TabsAPI.GetTabsById(tabsId);
+            const myTabs = new MyTabs(tabs);
+            myTabs.build();
+            return myTabs;
         }
-        ExtendExample.CustomCreate = CustomCreate;
-        function CustomInitialize(sidebarId) {
-            const mySidebar = _sidebarMap.get(sidebarId);
-            mySidebar.build();
-            return mySidebar;
-        }
-        ExtendExample.CustomInitialize = CustomInitialize;
-        class MySidebar extends OSUIFramework.Patterns.Sidebar.Sidebar {
-            constructor(sidebarId, configs) {
-                super(sidebarId, configs);
+        Tabs.CustomInitialize = CustomInitialize;
+        class MyTabs {
+            constructor(tabs) {
+                this._osuiTabs = tabs;
             }
-            _mySidebarOverlayClose(e) {
-                require("OutSystems/ClientRuntime/Main").Public.FeedbackMessage.showFeedbackMessage("Overlay default event was prevented", 0, true, "", false);
+            _keypressEventOverride(e) {
+                let targetHeaderItemIndex;
+                const isContentTarget = e.target !== this._activeTabHeaderElement.selfElement;
+                switch (e.key) {
+                    case OSFramework.OSUI.GlobalEnum.Keycodes.ArrowRight:
+                        if (isContentTarget) {
+                            return;
+                        }
+                        targetHeaderItemIndex = this.configs.StartingTab + 1;
+                        if (targetHeaderItemIndex < this.getChildItems(OSFramework.OSUI.Patterns.Tabs.Enum.ChildTypes.TabsHeaderItem).length) {
+                            this.changeTab(targetHeaderItemIndex, undefined, true);
+                        }
+                        break;
+                    case OSFramework.OSUI.GlobalEnum.Keycodes.ArrowLeft:
+                        if (isContentTarget) {
+                            return;
+                        }
+                        targetHeaderItemIndex = this.configs.StartingTab - 1;
+                        if (targetHeaderItemIndex >= 0) {
+                            this.changeTab(targetHeaderItemIndex, undefined, true);
+                        }
+                        break;
+                }
+                const targetHeaderItem = this.getChildByIndex(targetHeaderItemIndex, OSFramework.OSUI.Patterns.Tabs.Enum.ChildTypes.TabsHeaderItem);
+                if (targetHeaderItem) {
+                    targetHeaderItem.setFocus();
+                }
             }
             build() {
-                this._overlayClickCallback = this._mySidebarOverlayClose;
-                super.build();
+                this._osuiTabs._handleKeypressEvent = this._keypressEventOverride;
+                this._osuiTabs.build();
             }
         }
-        ExtendExample.MySidebar = MySidebar;
-    })(ExtendExample = MyOSUI.ExtendExample || (MyOSUI.ExtendExample = {}));
-})(MyOSUI || (MyOSUI = {}));
+        Tabs.MyTabs = MyTabs;
+    })(Tabs = OverridePattern.Tabs || (OverridePattern.Tabs = {}));
+})(OverridePattern || (OverridePattern = {}));
